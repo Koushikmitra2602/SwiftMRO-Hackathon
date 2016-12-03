@@ -1,0 +1,5 @@
+---
+applications:
+  - name: upload_workflow
+    buildpack: https://github.com/cloudfoundry/java-buildpack
+    path: target/upload_workflow-0.0.1-SNAPSHOT.jar
