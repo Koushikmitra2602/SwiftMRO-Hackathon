@@ -153,6 +153,7 @@ public class RepaireOrderDAOImpl implements IRepaireOrderDAO {
 			user.setUserId(rs.getInt("user_id"));
 			//TODO:
 			user.setNumOfOpenTask(rs.getInt("taskCnt"));
+			user.setRepaireShop(rs.getString("repair_shop_name"));
 			return user;
 		}
 	}
@@ -160,9 +161,10 @@ public class RepaireOrderDAOImpl implements IRepaireOrderDAO {
 	@Override
 	public List<User> fetchFieldEngineer() {
 		StringBuilder stringBuilder = new StringBuilder();
-		stringBuilder.append("select usr.user_sso, usr.user__first_name, usr.user_last_name, usr.role_code, usr.role_desc, usr.phone, usr.email, usr.user_id , ");
-		stringBuilder.append("(select count(*) from swift_mro_task_det tsk where tsk.status_code <> 'CL' and tsk.assigned_to = usr.user_id) taskCnt ");
-		stringBuilder.append("from swift_mro_users usr  where usr.role_code='FE'");
+		stringBuilder.append(" select usr.user_sso, usr.user__first_name, usr.user_last_name, usr.role_code, usr.role_desc, usr.phone, usr.email, usr.user_id , shop.repair_shop_name, ");
+		stringBuilder.append(" (select count(*) from swift_mro_task_det tsk where tsk.status_code <> 'CL' and tsk.assigned_to = usr.user_id) taskCnt ");
+		stringBuilder.append(" from swift_mro_users usr ,swift_mro_user_rep_shop_map map, swift_mro_repair_shop shop where usr.role_code='FE' and usr.user_id = map.user_id ");
+		stringBuilder.append(" and shop.rep_shop__id=map.rep_shop_id ");
 		
 		return jdbcTemplate.query(stringBuilder.toString(), new UserTaskMapper());
 	}
