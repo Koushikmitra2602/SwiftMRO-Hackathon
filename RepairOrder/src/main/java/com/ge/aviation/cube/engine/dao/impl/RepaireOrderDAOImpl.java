@@ -202,12 +202,12 @@ public class RepaireOrderDAOImpl implements IRepaireOrderDAO {
 	@Override
 	public List<String> fetchStatusList() {
 		StringBuilder stringBuilder = new StringBuilder();
-		stringBuilder.append("SELECT distinct(status_code) status_code FROM swift_mro_status_master");
+		stringBuilder.append("SELECT distinct(status_desc) status_desc FROM swift_mro_status_master where status_code IN ('Created', 'WIP', 'CL', 'PC')");
 		
 		List<String> statusList = jdbcTemplate.query(stringBuilder.toString(), new RowMapper<String>() {
 			@Override
 			public String mapRow(ResultSet rs, int arg1) throws SQLException {
-				return rs.getString("status_code");
+				return rs.getString("status_desc");
 			}
 		}); 
 		//System.out.println("stringBuilder.toString() >>> " + stringBuilder.toString());
