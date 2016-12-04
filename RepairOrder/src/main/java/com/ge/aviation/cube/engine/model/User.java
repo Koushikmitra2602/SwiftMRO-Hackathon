@@ -17,6 +17,7 @@ public class User implements Serializable {
 	private String email;
 	private Integer userId;
 	private Integer numOfOpenTask;
+	private String repaireShop;
 	
 	public Long getSso() {
 		return sso;
@@ -71,5 +72,11 @@ public class User implements Serializable {
 	}
 	public void setNumOfOpenTask(Integer numOfOpenTask) {
 		this.numOfOpenTask = numOfOpenTask;
+	}
+	public String getRepaireShop() {
+		return repaireShop;
+	}
+	public void setRepaireShop(String repaireShop) {
+		this.repaireShop = repaireShop;
 	}
 }
